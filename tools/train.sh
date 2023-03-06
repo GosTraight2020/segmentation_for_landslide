@@ -1,10 +1,10 @@
 #!/bin/bash
 now=$(date +"%Y%m%d_%H%M%S")
 
-config=configs/landslide.yaml
+config=configs/landslide_128.yaml
 labeled_id_path=partitions/landslide/100/labeled.txt
 unlabeled_id_path=partitions/landslide/100/unlabeled.txt
-save_path=exp/landslide/fixmatch/100/
+save_path=exp/landslide128/fixmatch/100/
 
 mkdir -p $save_path
 

@@ -169,7 +169,7 @@ def main():
             optimizer.param_groups[0]["lr"] = lr
             optimizer.param_groups[1]["lr"] = lr * cfg['lr_multi']
 
-            if (i % 100 == 0) and (rank == 0):
+            if (i % 20 == 0) and (rank == 0):
                 logger.info('Iters: {:}, Total loss: {:.3f}, Loss x: {:.3f}, '
                             'Loss s: {:.3f}, Mask: {:.3f}'.format(
                     i, total_loss / (i+1), total_loss_x / (i+1), total_loss_s / (i+1), total_mask_ratio / (i+1)))

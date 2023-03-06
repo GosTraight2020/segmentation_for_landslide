@@ -1,7 +1,7 @@
 # arguments for dataset
 dataset: landslide
 nclass: 2
-crop_size: 64
+crop_size: 128
 data_root: data/landslide
 
 # arguments for training

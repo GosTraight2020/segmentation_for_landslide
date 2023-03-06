@@ -45,7 +45,7 @@ class SemiDataset(Dataset):
         ignore_value = 254 if self.mode == 'train_u' else 255
         img, mask = crop(img, mask, self.size, ignore_value)
         img, mask = hflip(img, mask, p=0.5)
-
+        
         if self.mode == 'train_l':
             return normalize(img, mask)
 
@@ -69,6 +69,7 @@ class SemiDataset(Dataset):
         img_s2 = normalize(img_s2)
 
         mask = torch.from_numpy(np.array(mask)).long()
+        
         ignore_mask[mask == 254] = 255
 
         return normalize(img_w), img_s1, img_s2, ignore_mask, cutmix_box1, cutmix_box2
