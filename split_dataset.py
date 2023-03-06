@@ -34,15 +34,15 @@ label = has_landslide[1000:1050] + no_landslide[1000:1050]
 
 with open("partitions/landslide/labeled.txt", "w") as f:
     for pair in label:
-        f.write(f"{pair[0]} {pair[0]}\n")
+        f.write(f"{pair[0]} {pair[1]}\n")
 
 with open("partitions/landslide/unlabeled.txt", "w") as f:
     for pair in unlabel:
-        f.write(f"{pair[0]} {pair[0]}\n")
+        f.write(f"{pair[0]} {pair[1]}\n")
         
 with open("partitions/landslide/val.txt", "w") as f:
     for pair in test_set:
-        f.write(f"{pair[0]} {pair[0]}\n")
+        f.write(f"{pair[0]} {pair[1]}\n")
 
     
     

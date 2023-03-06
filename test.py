@@ -9,6 +9,10 @@ import torch
 from torch.utils.data import Dataset
 from torchvision import transforms
 
-mask = np.array(Image.open("data/landslide/1_mask.png"))
-print(np.unique(mask))
+for i in range(1, 3800):
+    mask = np.array(Image.open(f"data/landslide/{i}_mask.png"))
+    mask[mask==255] = 1
+    mask = Image.fromarray(mask)
+    mask = torch.from_numpy(np.array(mask)).long()
+    assert len(mask.shape) == 2, "i"
 
