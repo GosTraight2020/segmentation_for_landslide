@@ -33,10 +33,10 @@ class SemiDataset(Dataset):
     def __getitem__(self, item):
         id = self.ids[item]
         img = Image.open(os.path.join(self.root, id.split(' ')[0])).convert('RGB')
-        mask = Image.fromarray(np.array(Image.open(os.path.join(self.root, id.split(' ')[1]))))
+        mask = np.array(Image.open(os.path.join(self.root, id.split(' ')[1])))
         if self.name == "landslide":
             mask[mask==255] = 1
-            
+        mask = Image.fromarray(mask)
         if self.mode == 'val':
             img, mask = normalize(img, mask)
             return img, mask, id
