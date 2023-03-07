@@ -56,14 +56,14 @@ def evaluate(model, loader, mode, cfg, word_size):
             intersection, union, target = \
                 intersectionAndUnion(pred.cpu().numpy(), mask.numpy(), cfg['nclass'], 255)
 
-            tn, fp, fn, tp = confusion_matrix(mask.numpy(), pred.cpu().numpy()).ravel()
+            tn, fp, fn, tp = confusion_matrix(mask.numpy().ravel(), pred.cpu().numpy().ravel(), labels=[0, 1]).ravel()
             
             reduced_intersection = torch.from_numpy(intersection).cuda()
             reduced_union = torch.from_numpy(union).cuda()
             reduced_target = torch.from_numpy(target).cuda()
             
-            tn, fp, fn, tp = torch.from_numpy(tn).cuda(), torch.from_numpy(fp).cuda(), \
-                torch.from_numpy(fn).cuda(), torch.from_numpy(tp).cuda()
+            tn, fp, fn, tp = torch.tensor(tn).cuda(), torch.tensor(fp).cuda(), \
+                torch.tensor(fn).cuda(), torch.tensor(tp).cuda()
 
             dist.all_reduce(reduced_intersection)
             dist.all_reduce(reduced_union)
@@ -97,10 +97,10 @@ def evaluate(model, loader, mode, cfg, word_size):
     iou_class = intersection_meter.sum / (union_meter.sum + 1e-10)
     mIOU = np.mean(iou_class) * 100.0
     
-    acc = tp + tn / (sum([tn, fp, fn, tp]))
+    acc = (tp + tn) / (sum([tn, fp, fn, tp]))
     prec = tp / (tp + fp)
     recall = tp / (tp + fn)
-    f1 = 2 * prec * recall / (prec + recall)
+    f1 = 2 * prec * recall / ((prec + recall) + 1e-10)
     
     
     return mIOU, iou_class, acc, f1, auc_score
