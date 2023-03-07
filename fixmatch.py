@@ -178,10 +178,10 @@ def main():
             eval_mode = 'center_crop' if epoch < cfg['epochs'] - 20 else 'sliding_window'
         else:
             eval_mode = 'original'
-        mIOU, iou_class = evaluate(model, valloader, eval_mode, cfg)
+        mIOU, iou_class, acc, f1, auc_score = evaluate(model, valloader, eval_mode, cfg, word_size)
 
         if rank == 0:
-            logger.info('***** Evaluation {} ***** >>>> meanIOU: {:.2f}\n'.format(eval_mode, mIOU))
+            logger.info('***** Evaluation {} ***** >>>> meanIOU: {:.2f} ACC: {:.2f} F1: {:.2f} AUC: {:.2f}\n'.format(eval_mode, mIOU, acc, f1, auc_score))
 
         if mIOU > previous_best and rank == 0:
             if previous_best != 0:
