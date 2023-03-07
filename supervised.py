@@ -47,7 +47,7 @@ def evaluate(model, loader, mode, cfg, word_size):
             img = img.cuda()
             out = model(img)
             
-            prob = pred.softmax(dim=1)[:, 1, :, :] # bs, h, w
+            prob = out.softmax(dim=1)[:, 1, :, :] # bs, h, w
             prob_maps.append(prob.cpu())
             mask_maps.append(mask.cpu()) # bs, h, w
             
